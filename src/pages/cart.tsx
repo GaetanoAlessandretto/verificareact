@@ -8,11 +8,13 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { useRouter } from 'next/router';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
     const { cart } = useContext(AppContext);
+    const router = useRouter();
 
     return (
         <div>
@@ -32,6 +34,8 @@ export default function Home() {
                     </Grid>
                 ))}
             </Grid>
+            <Button
+                variant="contained" color="primary" style={{ marginLeft: '1100px', marginTop: '14px' }} onClick={() => router.push('/success')}>EFFETTUA IL PAGAMENTO</Button>
         </div>
     );
 }
