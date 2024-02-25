@@ -7,31 +7,30 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/router';
-
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const { products, addToCart } = useContext(AppContext)
   const router = useRouter();
+
   return (
-    <div>
+    <Grid container spacing={2}>
       {products?.map((product) => (
-        <div key={product.id}>
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-            <Card sx={{ width: 270, height: 370, margin: 1 }}>
-              <CardContent>
-                <h2>{product.title}</h2>
-                <p>{product.description}</p>
-                <p>Prezzo: {product.price} Euro</p>
-              </CardContent>
-              <Box display="flex" justifyContent="center">
-                <Button onClick={() => addToCart(product.id)} variant="contained">AGGIUNGI</Button>
-              </Box>
-            </Card>
-          </Box>
-        </div>
+        <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+          <Card sx={{ width: '80%', height: '100%' }}>
+            <CardContent>
+              <h2>{product.title}</h2>
+              <p>{product.description}</p>
+              <p>Prezzo: {product.price} Euro</p>
+            </CardContent>
+            <Box display="flex" justifyContent="center">
+              <Button style={{ bottom: '0' }} onClick={() => addToCart(product.id)} variant="contained">AGGIUNGI</Button>
+            </Box>
+          </Card>
+        </Grid>
       ))}
-    </div>
-  )
+    </Grid>
+  );
 }
