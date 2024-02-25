@@ -16,7 +16,9 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} display="flex" justifyContent="center">
+      <Button
+        variant="contained" color="primary" style={{ marginLeft: '1100px', marginTop: '14px' }} onClick={() => router.push('/cart')}>VAI AL CARRELLO</Button>
       {products?.map((product) => (
         <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
           <Card sx={{ width: '80%', height: '100%' }}>
