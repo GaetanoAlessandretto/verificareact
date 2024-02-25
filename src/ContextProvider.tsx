@@ -1,14 +1,15 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { Cart, Product, TContext } from "./declarations";
+import { title } from "process";
 
 export const AppContext = createContext<TContext>({
   cart: [],
   paid: false,
   products: null,
-  addToCart: () => {},
-  removeFromCart: () => {},
-  pay: () => {},
-  done: () => {},
+  addToCart: () => { },
+  removeFromCart: () => { },
+  pay: () => { },
+  done: () => { },
   getProductQuantity: () => 0,
   loading: false,
   error: "",
@@ -26,20 +27,23 @@ export function ContextProvider({ children }: Props) {
   const [error, setError] = useState<string>("");
 
   const addToCart = (idProduct: Product["id"]) => {
-    const found = cart.find((el) => el.id === idProduct);
+    const found = cart.find((el: any) => el.id === idProduct);
+    const productToAdd = products?.find((product: Product) => product.id === idProduct);
+
     if (!!found) {
-      const newCart = cart.map((el) => {
+      const newCart = cart.map((el: any) => {
         if (el.id !== idProduct) return el;
-        return { id: el.id, quantity: el.quantity + 1 };
+        return { id: el.id, quantity: el.quantity + 1, title: el.title, description: el.description, price: el.price };
       });
       setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
     } else {
-      setCart([...cart, { id: idProduct, quantity: 1 }]);
+      setCart([...cart, { id: idProduct, quantity: 1, title: productToAdd?.title || "", description: productToAdd?.description || "", price: productToAdd?.price || "" }]);
     }
   };
 
   const removeFromCart = (idProduct: Product["id"]) => {
-    const newCart = cart.reduce((acc, el) => {
+    const newCart = cart.reduce((acc: any, el: any) => {
       if (el.id === idProduct) {
         if (el.quantity > 1) {
           acc.push({ id: el.id, quantity: el.quantity - 1 });

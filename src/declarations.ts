@@ -1,15 +1,18 @@
 export type Cart = Array<{
   id: number;
   quantity: number;
+  title: string;
+  description: string;
+  price: string;
 }>;
 
 export interface Product {
-  qty: number;
+  quantity: number;
   userId: number;
   title: string;
   description: string;
   id: number;
-  price: number;
+  price: string;
   image: string;
   thumbnail: string;
 }
