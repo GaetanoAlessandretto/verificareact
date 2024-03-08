@@ -10,29 +10,36 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/router';
 const inter = Inter({ subsets: ["latin"] });
+import Link from 'next/link';
 
 export default function Home() {
-  const { products, addToCart } = useContext(AppContext)
+  const { products, addToMarked, removeFromCart } = useContext(AppContext)
   const router = useRouter();
-
+  const divStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+  };
   return (
-    <Grid container spacing={2}>
-      <Button
-        variant="contained" color="primary" style={{ marginLeft: '1100px', marginTop: '14px' }} onClick={() => router.push('/cart')}>VAI AL CARRELLO</Button>
-      {products?.map((product) => (
-        <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-          <Card sx={{ width: '80%', height: '100%' }}>
-            <CardContent>
-              <h2>{product.title}</h2>
-              <p>{product.description}</p>
-              <p>Prezzo: {product.price} Euro</p>
-            </CardContent>
-            <Box display="flex" justifyContent="center">
-              <Button style={{ bottom: '0' }} onClick={() => addToCart(product.id)} variant="contained">AGGIUNGI</Button>
-            </Box>
-          </Card>
+    <div style={divStyle}>
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+        <Grid container spacing={2} >
+          {products?.map((product) => (
+            <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+              <Card sx={{ width: '80%', height: '100%' }}>
+                <CardContent style={{ height: '280px' }}>
+                  <input type="checkbox" />
+                  <h2>{product.title}</h2>
+                  <p>{product.description}</p>
+                </CardContent>
+                <Box display="flex" justifyContent="center">
+                  <Button style={{ bottom: '0' }} onClick={() => removeFromCart(product.id)} variant="contained">RIMUOVI</Button>
+                  <Button style={{ bottom: '0' }} onClick={() => addToMarked(product.id)} variant="contained">AGGIUNGI ALLA LISTA</Button>
+                </Box>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
-      ))}
-    </Grid>
+      </Box>
+    </div>
   );
 }
